@@ -6,6 +6,7 @@ import { SectionHeader } from '../components/SectionHeader';
 import { TemperatureBadge } from '../components/TemperatureBadge';
 import { WeatherCard } from '../components/WeatherCard';
 import { WeatherIconPlaceholder } from '../components/WeatherIconPlaceholder';
+import { ThemedView } from '../components/themed-view';
 import { useWeatherStore, type ScreenKey, type WeatherState } from '../store/weatherStore';
 
 interface HomeScreenProps {

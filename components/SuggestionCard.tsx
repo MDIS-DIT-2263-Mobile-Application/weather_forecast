@@ -1,13 +1,25 @@
+import { ThemedText } from '@/components/themed-text';
+import { ThemedView } from '@/components/themed-view';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 interface SuggestionCardProps {
   suggestion: string;
 }
 
 export const SuggestionCard = ({ suggestion }: SuggestionCardProps) => (
-  <View>
-    <Text>SuggestionCard Component</Text>
-    <Text>{suggestion}</Text>
-  </View>
+  <ThemedView style={styles.container}>
+    <ThemedText>{suggestion}</ThemedText>
+  </ThemedView>
 );
+
+const styles = StyleSheet.create({
+  container: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 12,
+    borderRadius: 8,
+    marginVertical: 6,
+    backgroundColor: '#fafafa',
+  },
+});

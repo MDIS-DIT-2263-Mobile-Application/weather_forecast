@@ -1,7 +1,9 @@
 import React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, StyleSheet } from 'react-native';
 import { ScreenNavigationMenu } from '../components/ScreenNavigationMenu';
 import { WeatherCard } from '../components/WeatherCard';
+import { ThemedText } from '../components/themed-text';
+import { ThemedView } from '../components/themed-view';
 import { useWeatherStore, type ScreenKey, type WeatherState } from '../store/weatherStore';
 
 interface LocationDetailScreenProps {
@@ -13,9 +15,9 @@ export const LocationDetailScreen = ({ onNavigate }: LocationDetailScreenProps) 
   const currentWeather = useWeatherStore((state: WeatherState) => state.currentWeather);
 
   return (
-    <View>
-      <Text>LocationDetailScreen Component</Text>
-      <Text>Selected Location: {selectedLocation}</Text>
+    <ThemedView style={styles.container}>
+      <ThemedText type="title">Location Details</ThemedText>
+      <ThemedText>Selected Location: {selectedLocation}</ThemedText>
       <WeatherCard
         location={currentWeather?.location ?? selectedLocation}
         temperature={currentWeather?.temperature ?? 0}
@@ -24,6 +26,13 @@ export const LocationDetailScreen = ({ onNavigate }: LocationDetailScreenProps) 
       <Button title="Back to Locations" onPress={() => onNavigate('LocationList')} />
       <Button title="Back Home" onPress={() => onNavigate('Home')} />
       <ScreenNavigationMenu onNavigate={onNavigate} currentScreen="LocationDetail" />
-    </View>
+    </ThemedView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+});
