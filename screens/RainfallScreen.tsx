@@ -1,10 +1,12 @@
 import React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, StyleSheet } from 'react-native';
 import { Divider } from '../components/Divider';
 import { EmptyState } from '../components/EmptyState';
 import { RainAlertBanner } from '../components/RainAlertBanner';
 import { RainStatusBadge } from '../components/RainStatusBadge';
 import { ScreenNavigationMenu } from '../components/ScreenNavigationMenu';
+import { ThemedText } from '../components/themed-text';
+import { ThemedView } from '../components/themed-view';
 import { useWeatherStore, type ScreenKey, type WeatherState } from '../store/weatherStore';
 
 interface RainfallScreenProps {
@@ -17,22 +19,32 @@ export const RainfallScreen = ({ onNavigate }: RainfallScreenProps) => {
   const alertText = topRain > 6 ? 'High rainfall expected' : 'Rainfall currently manageable';
 
   return (
-    <View>
-      <Text>RainfallScreen Component</Text>
+    <ThemedView style={styles.container}>
+      <ThemedText type="title">Rainfall</ThemedText>
       <RainAlertBanner message={alertText} />
       <RainStatusBadge rainIntensity={topRain} />
       {rainfall.length === 0 ? <EmptyState message="No rainfall records" /> : null}
       {rainfall.map((entry, index) => (
-        <View key={`${entry.forecastTime}-${index}`}>
-          <Text>{entry.location}</Text>
-          <Text>{entry.forecastTime}</Text>
-          <Text>{entry.rainIntensity.toFixed(1)} mm</Text>
+        <ThemedView key={`${entry.forecastTime}-${index}`} style={styles.entry}>
+          <ThemedText>{entry.location}</ThemedText>
+          <ThemedText>{entry.forecastTime}</ThemedText>
+          <ThemedText>{entry.rainIntensity.toFixed(1)} mm</ThemedText>
           <Divider />
-        </View>
+        </ThemedView>
       ))}
       <Button title="Go Alerts" onPress={() => onNavigate('Alerts')} />
       <Button title="Back Home" onPress={() => onNavigate('Home')} />
       <ScreenNavigationMenu onNavigate={onNavigate} currentScreen="Rainfall" />
-    </View>
+    </ThemedView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  entry: {
+    marginBottom: 8,
+  },
+});
