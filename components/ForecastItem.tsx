@@ -1,5 +1,7 @@
+import { ThemedText } from '@/components/themed-text';
+import { ThemedView } from '@/components/themed-view';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 interface ForecastItemProps {
   forecastTime: string;
@@ -8,10 +10,17 @@ interface ForecastItemProps {
 }
 
 export const ForecastItem = ({ forecastTime, temperature, rainIntensity }: ForecastItemProps) => (
-  <View>
-    <Text>ForecastItem Component</Text>
-    <Text>Time: {forecastTime}</Text>
-    <Text>Temperature: {temperature.toFixed(1)}°C</Text>
-    <Text>Rain: {rainIntensity.toFixed(1)} mm</Text>
-  </View>
+  <ThemedView style={styles.container}>
+    <ThemedText>{forecastTime}</ThemedText>
+    <ThemedText>Temp: {temperature.toFixed(1)}°C</ThemedText>
+    <ThemedText>Rain: {rainIntensity.toFixed(1)} mm</ThemedText>
+  </ThemedView>
 );
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+});

@@ -1,11 +1,12 @@
 import React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, StyleSheet } from 'react-native';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { ScreenNavigationMenu } from '../components/ScreenNavigationMenu';
 import { SectionHeader } from '../components/SectionHeader';
 import { TemperatureBadge } from '../components/TemperatureBadge';
 import { WeatherCard } from '../components/WeatherCard';
 import { WeatherIconPlaceholder } from '../components/WeatherIconPlaceholder';
+import { ThemedView } from '../components/themed-view';
 import { useWeatherStore, type ScreenKey, type WeatherState } from '../store/weatherStore';
 
 interface HomeScreenProps {
@@ -17,7 +18,7 @@ export const HomeScreen = ({ onNavigate }: HomeScreenProps) => {
   const isLoading = useWeatherStore((state: WeatherState) => state.isLoading);
 
   return (
-    <View>
+    <ThemedView style={styles.container}>
       <SectionHeader title="Home" />
       {isLoading ? <LoadingIndicator label="Loading weather data" /> : null}
       <WeatherCard
@@ -27,10 +28,16 @@ export const HomeScreen = ({ onNavigate }: HomeScreenProps) => {
       />
       <TemperatureBadge temperature={currentWeather?.temperature ?? 0} />
       <WeatherIconPlaceholder condition={currentWeather?.condition ?? 'Unknown'} />
-      <Text>HomeScreen Component</Text>
       <Button title="Open Forecast" onPress={() => onNavigate('Forecast')} />
       <Button title="Open Assistant" onPress={() => onNavigate('Assistant')} />
       <ScreenNavigationMenu onNavigate={onNavigate} currentScreen="Home" />
-    </View>
+    </ThemedView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+});

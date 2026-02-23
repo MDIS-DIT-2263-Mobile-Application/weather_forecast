@@ -1,7 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, StyleSheet } from 'react-native';
 import { ScreenNavigationMenu } from '../components/ScreenNavigationMenu';
 import { SearchBar } from '../components/SearchBar';
+import { ThemedText } from '../components/themed-text';
+import { ThemedView } from '../components/themed-view';
 import { useWeatherStore, type ScreenKey, type WeatherState } from '../store/weatherStore';
 
 interface LocationListScreenProps {
@@ -25,14 +27,21 @@ export const LocationListScreen = ({ onNavigate }: LocationListScreenProps) => {
   };
 
   return (
-    <View>
-      <Text>LocationListScreen Component</Text>
+    <ThemedView style={styles.container}>
+      <ThemedText type="title">Select Location</ThemedText>
       <SearchBar value={search} onChangeText={setSearch} placeholder="Search location" />
       {filtered.map((location) => (
         <Button key={location} title={location} onPress={() => chooseLocation(location)} />
       ))}
       <Button title="Back Home" onPress={() => onNavigate('Home')} />
       <ScreenNavigationMenu onNavigate={onNavigate} currentScreen="LocationList" />
-    </View>
+    </ThemedView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+});
