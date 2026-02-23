@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Platform, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 interface AssistantInputBoxProps {
   value: string;
@@ -7,105 +7,113 @@ interface AssistantInputBoxProps {
   onSubmit: () => void;
 }
 
-export const AssistantInputBox = ({ value, onChangeText, onSubmit }: AssistantInputBoxProps) => (
-  <View style={styles.container}>
-    <Text style={styles.label}>Assistant AI</Text>
-    <TextInput
-      style={styles.input}
-      value={value}
-      onChangeText={onChangeText}
-      placeholder="Ask a weather question..."
-      placeholderTextColor="#888"
-      // UX Enhancements
-      returnKeyType="send"
-      onSubmitEditing={onSubmit} 
-      blurOnSubmit={false}
-    />
-    <Button title="Ask" onPress={onSubmit} disabled={!value.trim()} />
-  </View>
-);
+export const AssistantInputBox = ({ value, onChangeText, onSubmit }: AssistantInputBoxProps) => {
+  const isDisabled = !value.trim();
+  return (
+    <View style={styles.wrapper}>
+      <View style={styles.container}>
+        <View style={styles.headerRow}>
+          <Text style={styles.label}>Assistant AI</Text>
+          <Text style={styles.subtitle}>Get quick weather answers</Text>
+        </View>
+
+        <View style={styles.inputRow}>
+          <TextInput
+            style={[styles.input, isDisabled && styles.inputDisabled]}
+            value={value}
+            onChangeText={onChangeText}
+            placeholder="Ask something like “Will it rain this afternoon?”"
+            placeholderTextColor="#9AA4B2"
+            returnKeyType="send"
+            onSubmitEditing={() => { if (!isDisabled) onSubmit(); }}
+            blurOnSubmit={false}
+          />
+
+          <Pressable
+            style={({ pressed }) => [
+              styles.button,
+              isDisabled && styles.buttonDisabled,
+              pressed && !isDisabled && styles.buttonPressed,
+            ]}
+            onPress={() => { if (!isDisabled) onSubmit(); }}
+            disabled={isDisabled}
+          >
+            <Text style={[styles.buttonText, isDisabled && styles.buttonTextDisabled]}>🔎 Ask</Text>
+          </Pressable>
+        </View>
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
+  wrapper: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
   container: {
-    padding: 16,
-    backgroundColor: '#f6fbff',
-    borderRadius: 12,
-    margin: 12,
+    backgroundColor: '#ffffff',
+    borderRadius: 14,
+    padding: 14,
     ...Platform.select({
       ios: {
-        shadowColor: '#1b6bff',
+        shadowColor: '#0077ff',
         shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: 0.07,
+        shadowOpacity: 0.06,
         shadowRadius: 18,
       },
-      android: {
-        elevation: 4,
-      },
+      android: { elevation: 2 },
     }),
+  },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
   },
   label: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#15315b',
-    marginBottom: 10,
+    color: '#0f172a',
+  },
+  subtitle: {
+    fontSize: 12,
+    color: '#64748b',
   },
   inputRow: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  inputWrapper: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderWidth: 1,
-    borderColor: '#e6eefc',
-  },
-  icon: {
-    fontSize: 18,
-    marginRight: 8,
-  },
   input: {
     flex: 1,
-    height: 40,
-    fontSize: 15,
-    color: '#0f1724',
-    padding: 0,
+    height: 44,
+    backgroundColor: '#f7fbff',
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    borderWidth: 1,
+    borderColor: '#e6eef8',
+  },
+  inputDisabled: {
+    opacity: 0.8,
   },
   button: {
-    marginLeft: 12,
-    backgroundColor: '#3366FF',
-    paddingHorizontal: 18,
+    marginLeft: 10,
+    backgroundColor: '#2563eb',
+    paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    minWidth: 72,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#3366FF',
-        shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: 0.15,
-        shadowRadius: 10,
-      },
-      android: { elevation: 2 },
-    }),
+  },
+  buttonPressed: {
+    opacity: 0.9,
   },
   buttonDisabled: {
-    opacity: 0.55,
-    backgroundColor: '#90a4ff',
+    backgroundColor: '#9aa9c7',
   },
   buttonText: {
     color: '#fff',
     fontWeight: '700',
-    fontSize: 15,
   },
-  helper: {
-    marginTop: 10,
-    fontSize: 12,
-    color: '#5b6b80',
+  buttonTextDisabled: {
+    color: '#f2f6fb',
   },
 });
