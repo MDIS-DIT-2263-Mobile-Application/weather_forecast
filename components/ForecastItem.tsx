@@ -17,26 +17,22 @@ export const ForecastItem = ({
 
   return (
     <View style={styles.card}>
-      {/* Time */}
       <Text style={styles.time}>{forecastTime}</Text>
 
-      {/* Middle Section */}
       <View style={styles.middle}>
         <Ionicons
           name={isRaining ? 'rainy' : 'partly-sunny'}
           size={28}
           color={isRaining ? '#4DA6FF' : '#FDB813'}
         />
-
         <Text style={styles.temperature}>
           {temperature.toFixed(1)}°C
         </Text>
       </View>
 
-      {/* Rain Info */}
       <View style={styles.rainContainer}>
         <Text style={styles.rainText}>
-          {rainIntensity.toFixed(1)} mm
+          Rain: {rainIntensity.toFixed(1)} mm
         </Text>
         <View style={styles.rainBarBackground}>
           <View
@@ -53,17 +49,17 @@ export const ForecastItem = ({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#1E1E2E',
+    backgroundColor: '#FFFFFF',
     padding: 16,
-    borderRadius: 16,
+    borderRadius: 18,
     marginVertical: 8,
     shadowColor: '#000',
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.08,
     shadowRadius: 8,
-    elevation: 5,
+    elevation: 4,
   },
   time: {
-    color: '#A0A0B0',
+    color: '#6B7280',
     fontSize: 14,
     marginBottom: 8,
   },
@@ -73,26 +69,26 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   temperature: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontSize: 24,
+    fontWeight: '600',
+    color: '#111827',
   },
   rainContainer: {
     marginTop: 12,
   },
   rainText: {
-    color: '#CCCCCC',
+    color: '#374151',
     fontSize: 12,
     marginBottom: 4,
   },
   rainBarBackground: {
     height: 6,
-    backgroundColor: '#2E2E3E',
+    backgroundColor: '#E5E7EB',
     borderRadius: 4,
     overflow: 'hidden',
   },
   rainBar: {
     height: '100%',
-    backgroundColor: '#4DA6FF',
+    backgroundColor: '#3B82F6',
   },
 });
